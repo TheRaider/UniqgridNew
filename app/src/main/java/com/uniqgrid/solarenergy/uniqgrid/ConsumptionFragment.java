@@ -51,10 +51,9 @@ import models.LoadDistGI;
 
 public class ConsumptionFragment extends Fragment {
 
-    PieChart pieChart;
+
     BarChart barChart;
     ArrayList<Integer> colors;
-    ArrayList<LoadDistGI> loadDistGIArrayList = new ArrayList<>();
     ArrayList<ConsumptionGI> consumptionGIArrayList = new ArrayList<>();
     ArrayList<String> labels = new ArrayList<>();
     NestedScrollView nsAddEst;
@@ -81,29 +80,6 @@ public class ConsumptionFragment extends Fragment {
         for (int c : ColorTemplate.PASTEL_COLORS)
             colors.add(c);
 
-
-
-        // Charts
-
-        // Load Distribution PieChart
-        pieChart = (PieChart) customView.findViewById(R.id.pieChart);
-
-        // Setting Legend(actually removing the legend)
-        //pieChart.getLegend().setEnabled(false);
-        pieChart.getLegend().setWordWrapEnabled(true);
-      //  pieChart.getLegend().setPosition(Legend.LegendPosition.RIGHT_OF_CHART_CENTER);
-      //  pieChart.getLegend().setOrientation(Legend.LegendOrientation.VERTICAL);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setRotationEnabled(false);
-        pieChart.setDrawSliceText(false);
-        pieChart.setHoleRadius(20f);
-        pieChart.setTransparentCircleRadius(20f);
-
-      //  pieChart.setCenterText("Total  \n " + RoundOff(100));
-
-        populatePieGraphData();
-        populatePieGraph(loadDistGIArrayList,"Load Distribution");
 
         // Consumption Pattern Bar Chart
 
@@ -147,6 +123,7 @@ public class ConsumptionFragment extends Fragment {
         l.setFormSize(9f);
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
+        l.setEnabled(false);
 
 
         IMarker marker = new YourMarkerView(getContext(),R.layout.custom_marker_view_layout);
@@ -177,24 +154,7 @@ public class ConsumptionFragment extends Fragment {
 
     }
 
-    public void populatePieGraphData(){
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
 
-
-    }
 
 
     public void populateConsumptionBarGraph(ArrayList<ConsumptionGI> consumptionGIS , String Label){
@@ -228,47 +188,7 @@ public class ConsumptionFragment extends Fragment {
 
 
 
-    public void populatePieGraph(ArrayList<LoadDistGI> graphItems , String Label){
-        ArrayList<PieEntry> yValues = new ArrayList<>();
-        for(LoadDistGI graphItem : graphItems) {
 
-            if(graphItem.getkW() > 0){
-                yValues.add(new PieEntry((float) graphItem.getPercent(),graphItem.getCategory()));
-            }
-        }
-
-        PieDataSet pieDataSet = new PieDataSet(yValues,"");
-        pieDataSet.setColors(colors);
-      //  pieDataSet.setLabel("Load Distribution");
-        pieDataSet.setSliceSpace(2f);
-
-        IValueFormatter formatter = new IValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                return value+"";
-            }
-        };
-
-
-        IValueFormatter MyValueFormatter = new IValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                if(value < 5) return "";
-                else return value + " %";
-            }
-        };
-
-
-        PieData pieData = new PieData(pieDataSet);
-        pieData.setValueTextSize(11f);
-      //  pieData.setValueFormatter(formatter);
-        pieData.setValueFormatter(new PercentFormatter());
-
-        pieChart.setData(pieData);
-        pieChart.animateY(1400);
-
-
-    }
 
     public Double RoundOff(Double d){
         return Math.round(d * 100.0) / 100.0;

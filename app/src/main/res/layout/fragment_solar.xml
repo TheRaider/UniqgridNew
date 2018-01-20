@@ -36,9 +36,9 @@
                      android:paddingTop="10dp"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:text="ROOF TOP"
+                     android:text="ROOFTOP VIEW"
                      android:textStyle="bold"
-                     android:textColor="@color/colorPrimary"/>
+                     android:textColor="@color/card_heading"/>
                  <LinearLayout
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
@@ -274,7 +274,7 @@
                         android:layout_height="wrap_content"
                         android:text="SOLAR ANALYSIS"
                         android:textStyle="bold"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textColor="@color/card_heading"/>
 
 
                     <com.github.mikephil.charting.charts.LineChart

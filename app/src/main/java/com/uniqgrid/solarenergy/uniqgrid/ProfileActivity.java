@@ -52,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
     int PLACE_PICKER_REQUEST = 1;
 
 
+    ImageView ivBack;
 
 
     FloatingActionButton fabForward;
@@ -62,10 +63,10 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_profile);
 
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+        overridePendingTransition(R.anim.slide_in_up,R.anim.hold);
 
         if(getSupportActionBar()!=null){
             getSupportActionBar().setTitle("Profile");
@@ -79,6 +80,13 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
         nsAddEst = (NestedScrollView) findViewById(R.id.nsAddEst);
 
 
+        ivBack = (ImageView) findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 
 
@@ -125,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
         // when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
 
     }
 
@@ -142,6 +150,7 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onResume() {
         super.onResume();
 
+        mapFragment.getMapAsync(this);
     }
 
 
@@ -208,4 +217,9 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
 
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.hold, R.anim.slide_down);
+    }
 }
