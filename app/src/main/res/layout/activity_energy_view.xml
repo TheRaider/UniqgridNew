@@ -17,7 +17,6 @@
                 android:layout_height="?attr/actionBarSize"
                 android:orientation="horizontal"
                 android:padding="7dp"
-                android:background="@color/bluePrimaryDark"
                 android:gravity="center_vertical">
                 <ImageView
                     android:id="@+id/ivClose"
@@ -26,7 +25,7 @@
                     android:padding="8dp"
                     android:layout_gravity="start"
                     android:src="@drawable/ic_clear"
-                    android:tint="@color/finestWhite"/>
+                    android:tint="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/tvLogo"
@@ -37,7 +36,7 @@
                     android:maxLines="1"
                     android:text="Energy View"
                     android:textSize="15sp"
-                    android:textColor="@color/finestWhite" />
+                    android:textColor="@color/colorPrimary" />
 
 
                 <ImageView
@@ -47,7 +46,7 @@
                     android:padding="8dp"
                     android:src="@drawable/ic_three_dots"
                     android:layout_gravity="end"
-                    android:tint="@color/finestWhite"/>
+                    android:tint="@color/colorPrimary"/>
             </LinearLayout>
 
             <ProgressBar
@@ -55,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:progressTint="@color/finestWhite"
+                android:progressTint="@color/colorPrimary"
                 android:layout_gravity="bottom"/>
         </FrameLayout>
 

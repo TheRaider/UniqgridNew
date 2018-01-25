@@ -90,6 +90,7 @@
                             android:id="@+id/map_layout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+
                             >
 
                             <fragment
@@ -153,17 +154,17 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
                                 android:background="@color/white"
+                                android:orientation="vertical"
+                                android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingBottom="10dp">
+                                android:paddingRight="10dp">
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:paddingLeft="5dp"
-                                    >
+                                    android:paddingLeft="5dp">
 
                                     <TextView
                                         android:layout_width="match_parent"
@@ -172,11 +173,13 @@
                                         android:textColor="#AA000000"
                                         android:textSize="15sp"
                                         android:textStyle="bold" />
+
                                     <TextView
+                                        android:id="@+id/tvEstName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="Gopi Radha Inter College"/>
+                                        android:text="Gopi Radha Inter College" />
 
 
                                 </LinearLayout>
@@ -184,9 +187,10 @@
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:layout_marginTop="8dp"
                                     android:layout_marginBottom="2dp"
-                                    android:background="#22000000"/>
+                                    android:layout_marginTop="8dp"
+                                    android:background="#22000000" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -203,21 +207,22 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvSegment"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="Industrial"/>
+                                        android:text="Industrial" />
 
                                 </LinearLayout>
-
 
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:layout_marginTop="8dp"
                                     android:layout_marginBottom="2dp"
-                                    android:background="#22000000"/>
+                                    android:layout_marginTop="8dp"
+                                    android:background="#22000000" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -234,13 +239,13 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvSancLoad"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="1000 kWh"/>
+                                        android:text="1000 kWh" />
 
                                 </LinearLayout>
-
 
 
                             </LinearLayout>
@@ -310,11 +315,13 @@
                                         android:textColor="#AA000000"
                                         android:textSize="15sp"
                                         android:textStyle="bold" />
+
                                     <TextView
+                                        android:id="@+id/tvOwnerName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="Amit Tripati"/>
+                                        android:text="Amit Tripati" />
 
 
                                 </LinearLayout>
@@ -341,10 +348,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvOwnerPhone"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="+91-820-3234042"/>
+                                        android:text="+91-820-3234042" />
 
                                 </LinearLayout>
 
@@ -372,10 +380,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvOwnerEmail"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="amittripati@gmail.com"/>
+                                        android:text="amittripati@gmail.com" />
 
                                 </LinearLayout>
 
@@ -448,11 +457,13 @@
                                         android:textColor="#AA000000"
                                         android:textSize="15sp"
                                         android:textStyle="bold" />
+
                                     <TextView
+                                        android:id="@+id/tvPOCName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="Amit Tripati"/>
+                                        android:text="Amit Tripati" />
 
 
                                 </LinearLayout>
@@ -470,6 +481,7 @@
                                     android:paddingLeft="5dp">
 
                                     <TextView
+
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="5dp"
@@ -479,10 +491,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvPOCPhone"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="+91-820-3234042"/>
+                                        android:text="+91-820-3234042" />
 
                                 </LinearLayout>
 
@@ -510,10 +523,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvPOCEmail"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="amittripati@gmail.com"/>
+                                        android:text="amittripati@gmail.com" />
 
                                 </LinearLayout>
 
@@ -589,11 +603,13 @@
                                         android:textColor="#AA000000"
                                         android:textSize="15sp"
                                         android:textStyle="bold" />
+
                                     <TextView
+                                        android:id="@+id/tvStreetAddress"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="15 Colony Lane"/>
+                                        android:text="15 Colony Lane" />
 
 
                                 </LinearLayout>
@@ -620,10 +636,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvArea"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="Ravindrapur"/>
+                                        android:text="Ravindrapur" />
 
                                 </LinearLayout>
 
@@ -651,10 +668,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvCity"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="Varanasi"/>
+                                        android:text="Varanasi" />
 
                                 </LinearLayout>
 
@@ -682,10 +700,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvState"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="Uttar Pradesh(UP)"/>
+                                        android:text="Uttar Pradesh(UP)" />
 
                                 </LinearLayout>
 
@@ -712,10 +731,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvPostalCode"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="221005"/>
+                                        android:text="221005" />
 
                                 </LinearLayout>
 
@@ -742,10 +762,11 @@
                                         android:textStyle="bold" />
 
                                     <TextView
+                                        android:id="@+id/tvGpsCoordinates"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="8dp"
-                                        android:text="25°17'23.6 N , 83°00'03.1E"/>
+                                        android:text="25°17'23.6 N , 83°00'03.1E" />
 
                                 </LinearLayout>
 

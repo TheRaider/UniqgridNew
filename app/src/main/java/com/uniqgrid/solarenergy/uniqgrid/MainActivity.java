@@ -3,9 +3,11 @@ package com.uniqgrid.solarenergy.uniqgrid;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
@@ -16,24 +18,43 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.thefinestartist.finestwebview.FinestWebView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
 
 import Utils.BottomNavigationViewBehaviour;
 import Utils.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    ImageView ivDrawerIcon;
+    ImageView ivDrawerIcon,ivRefresh;
     TextView tvLogo;
     DrawerLayout drawer;
+    BottomNavigationView bottomNavigationView;
+    NavigationView navigationView;
+
+    TextView tvNavEstName,tvNavEmail;
+    String navEstName="",navEmail="";
+
+
 
 
     @Override
@@ -70,25 +91,123 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        tvNavEstName = (TextView) headerView.findViewById(R.id.tvNavEstName);
+        tvNavEmail = (TextView) headerView.findViewById(R.id.tvNavEmail);
 
 
         // Bottom Navigation Bar
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // Helper Class to disable shift mode in bottom navigation drawer when there are more than 3 items
         // Disabling shift mode using helper class
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
-        // Hiding Bottom navigation bar on scroll
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigationView.getLayoutParams();
-        layoutParams.setBehavior(new BottomNavigationViewBehaviour());
+//        // Hiding Bottom navigation bar on scroll
+//        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigationView.getLayoutParams();
+//        layoutParams.setBehavior(new BottomNavigationViewBehaviour());
 
         // Select Home
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+
+
+
+        ivRefresh = (ImageView) findViewById(R.id.ivRefresh);
+
+        final Animation rotation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotation);
+
+            // Set onClick listener for button press action
+        ivRefresh.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    view.startAnimation(rotation);
+
+                   // send request
+                    refreshData();
+                    loadData();
+
+                }
+            });
+
+        loadData();
     }
+
+
+
+
+    public  void refreshData(){
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String email = app_preferences.getString("email","abcd");
+
+        AndroidNetworking.get("https://www.ragic.com/uniqgrid/crm3/1?where=1000507,eq,"+email+"&api")
+                .addHeaders("Authorization","Basic ajZNMW9hMFQrV2lqT2NxdURuTzJGbS8yRnhrY0crQmpUdGt0R1RPNFhHSldKK2lTL3dBWVhKOG1ScHpEQXVNOQ==") // posting header
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+
+                        String crctPassword = "";
+                        String successMsg="abcd";
+                        JSONObject content = new JSONObject();
+                        Iterator<String> keys = response.keys();
+
+                        if(response.length() == 0 || !(keys.hasNext())){
+                            Snackbar.make(findViewById(android.R.id.content), "Please check your Network Connection", Snackbar.LENGTH_LONG).show();
+                        }else{
+                            try {
+                                if(keys.hasNext()) {
+                                    content = response.getJSONObject(keys.next());
+                                }
+                            }catch (JSONException exception){
+
+                            }
+
+                                SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                                SharedPreferences.Editor editor = app_preferences.edit();
+                                editor.putString("content",content.toString());
+                                editor.apply();
+
+                            }
+
+                        }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Snackbar.make(findViewById(android.R.id.content), "Please check your Network Connection", Snackbar.LENGTH_LONG).show();
+                    }
+
+                });
+
+        bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
+
+
+    }
+    public  void loadData(){
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String content = app_preferences.getString("content","abcd");
+        if(!content.equals("abcd")){
+            try {
+
+                JSONObject contentJson = new JSONObject(content);
+                navEstName = contentJson.getString("Name of the establishment");
+                navEmail = contentJson.getString("Email");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        tvNavEstName.setText(navEstName);
+        tvNavEmail.setText(navEmail);
+
+    }
+
+
 
     public void openDrawer(){
         drawer.openDrawer(Gravity.START);
@@ -194,6 +313,13 @@ public class MainActivity extends AppCompatActivity
             openActivity(intent);
         }else if(id == R.id.nav_logout){
 
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+            Toast.makeText(MainActivity.this,"Successfully Logged out",Toast.LENGTH_LONG).show();
         }else{
 /*
         if (id == R.id.nav_dashboard) {

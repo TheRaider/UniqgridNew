@@ -7,11 +7,11 @@ package models;
 public class Asset {
     private String category;
     private String assetType;
-    private double wattage;
-    private int quantity;
-    private double totalWattage;
+    private String wattage;
+    private String quantity;
+    private String totalWattage;
 
-    public Asset(String category, String assetType, double wattage, int quantity, double totalWattage) {
+    public Asset(String category, String assetType, String wattage, String quantity, String totalWattage) {
         this.category = category;
         this.assetType = assetType;
         this.wattage = wattage;
@@ -35,27 +35,27 @@ public class Asset {
         this.assetType = assetType;
     }
 
-    public double getWattage() {
+    public String getWattage() {
         return wattage;
     }
 
-    public void setWattage(double wattage) {
+    public void setWattage(String wattage) {
         this.wattage = wattage;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
-    public double getTotalWattage() {
+    public String getTotalWattage() {
         return totalWattage;
     }
 
-    public void setTotalWattage(double totalWattage) {
+    public void setTotalWattage(String totalWattage) {
         this.totalWattage = totalWattage;
     }
 }

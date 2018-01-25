@@ -27,7 +27,7 @@
                 android:layout_marginBottom="15dp"
                 android:focusableInTouchMode="true"
                 android:id="@+id/cardGraph"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"

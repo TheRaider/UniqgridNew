@@ -9,8 +9,8 @@
     <item
         android:id="@+id/menu_item_copy_link"
         android:title="Copy Link"/>
-    <item
-        android:id="@+id/menu_item_open_with"
-        android:title="Open with"/>
+    <!--<item-->
+        <!--android:id="@+id/menu_item_open_with"-->
+        <!--android:title="Open with"/>-->
 
 </menu>

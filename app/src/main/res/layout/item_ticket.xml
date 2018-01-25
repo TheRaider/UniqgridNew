@@ -49,6 +49,7 @@
                         android:text="Ticket No : "
                         android:textColor="#AA000000"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/tvTicketNo"
                         android:layout_width="wrap_content"
@@ -76,10 +77,10 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvTicketValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INR 2000"
-                        />
+                        android:text="INR 2000" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -124,6 +125,7 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                     android:padding="2dp">
 
                     <ProgressBar
+                        android:id="@+id/pgCreated"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="7dp"
@@ -144,6 +146,7 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvCreatedDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -159,6 +162,7 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                     android:padding="2dp">
 
                     <ProgressBar
+                        android:id="@+id/pgConfirmed"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="7dp"
@@ -179,6 +183,7 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvConfirmedDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -194,6 +199,7 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                     android:padding="2dp">
 
                     <ProgressBar
+                        android:id="@+id/pgInProgress"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="7dp"
@@ -214,10 +220,11 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvInProgressDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="17 Jan 2018"
+                        android:text=""
                         android:textSize="10sp" />
                 </LinearLayout>
 
@@ -229,6 +236,7 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                     android:padding="2dp">
 
                     <ProgressBar
+                        android:id="@+id/pgCompleted"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="7dp"
@@ -249,6 +257,7 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvCompletedDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -466,14 +475,17 @@ Request processed on 10-01-2018 to be completed by 30-01-2018"
                     android:text="Rating : "
                     android:textColor="#AA000000"
                     android:textStyle="bold" />
+
                 <RatingBar
+                    android:id="@+id/rbFeedback"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:rating="3"
                     android:progressTint="#efe703"
-                    style="@style/Widget.AppCompat.RatingBar.Small"/>
+                    android:rating="3" />
                 <Button
+                    android:id="@+id/bSubmitFeedBack"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="20dp"

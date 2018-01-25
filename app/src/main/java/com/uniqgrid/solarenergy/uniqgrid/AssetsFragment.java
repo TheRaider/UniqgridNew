@@ -1,8 +1,10 @@
 package com.uniqgrid.solarenergy.uniqgrid;
 
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,9 +25,14 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
+import Utils.ColorTemplates;
 import models.Asset;
 import models.LoadDistGI;
 
@@ -62,15 +69,18 @@ public class AssetsFragment extends Fragment {
         // Adding colors
         colors = new ArrayList<>();
 
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.PASTEL_COLORS)
+//        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+//            colors.add(c);
+//        for (int c : ColorTemplate.JOYFUL_COLORS)
+//            colors.add(c);
+//        for (int c : ColorTemplate.COLORFUL_COLORS)
+//            colors.add(c);
+//        for (int c : ColorTemplate.LIBERTY_COLORS)
+//            colors.add(c);
+//        for (int c : ColorTemplate.PASTEL_COLORS)
+//            colors.add(c);
+
+        for (int c : ColorTemplates.COLOR_SET_3)
             colors.add(c);
 
 
@@ -87,16 +97,16 @@ public class AssetsFragment extends Fragment {
         pieChart.setEntryLabelColor(Color.BLACK);
         pieChart.setRotationEnabled(false);
         pieChart.setDrawSliceText(false);
-        pieChart.setHoleRadius(20f);
-        pieChart.setTransparentCircleRadius(20f);
+        pieChart.setHoleRadius(0f);
+        pieChart.setTransparentCircleRadius(0f);
 
         //  pieChart.setCenterText("Total  \n " + RoundOff(100));
 
-        populatePieGraphData();
+        prepareData();
+        loadData();
         populatePieGraph(loadDistGIArrayList,"Load Distribution");
 
         setAssetNameToImageMapping();
-        loadAssets();
         seperateAssetsBasedOnCategory();
 
         rvLighting = (RecyclerView) customView.findViewById(R.id.rvLighting);
@@ -159,41 +169,108 @@ public class AssetsFragment extends Fragment {
 
 
     }
+    public  void prepareData(){
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String content = app_preferences.getString("content","abcd");
+        if(!content.equals("abcd")){
+            try {
+
+                JSONObject contentJson = new JSONObject(content);
+                JSONObject appliancesJson = contentJson.getJSONObject("_subtable_1000506");
+                Iterator<String> keys = appliancesJson.keys();
+                while(keys.hasNext()){
+                    JSONObject assetJson = appliancesJson.getJSONObject(keys.next());
+                    Asset asset = new Asset(assetJson.getString("Category"),
+                            assetJson.getString("Asset Type"),
+                            assetJson.getString("Wattage"),
+                            assetJson.getString("Quantity"),
+                            assetJson.getString("Total Wattage") );
+                    allAssetsArrayList.add(asset);
+                }
+
+
+                JSONObject pieGraphJson = contentJson.getJSONObject("_subtable_1000555");
+                keys = pieGraphJson.keys();
+                while(keys.hasNext()){
+                    JSONObject pieGraphDataJson = pieGraphJson.getJSONObject(keys.next());
+                    String category = pieGraphDataJson.getString("Asset Category");
+                    String kW = pieGraphDataJson.getString("kW");
+                    String percent = pieGraphDataJson.getString("%");
+                    double kWNum = 0,percentNum=0;
+                    try {
+                         kWNum = Double.parseDouble(kW);
+                         percentNum = Double.parseDouble(percent);
+                    }catch (NumberFormatException e){
+
+                        Log.d("Unable to parse",kW + " "+percent);
+                    }
+
+                    LoadDistGI loadDistGI = new LoadDistGI(category,kWNum ,percentNum);
+                    loadDistGIArrayList.add(loadDistGI);
+                }
+
+
+
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void loadData(){
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
 
     public  void loadAssets(){
-        allAssetsArrayList.add(new Asset("Lighting","CFL",10,4,40));
-        allAssetsArrayList.add(new Asset("Lighting","Tubelight",10,4,40));
-        allAssetsArrayList.add(new Asset("Lighting","LED light bulb",10,4,40));
-        allAssetsArrayList.add(new Asset("Lighting","Incandescent bulb",10,4,40));
-
-        allAssetsArrayList.add(new Asset("Cooling and Heating","Airconditioner",10,4,40));
-        allAssetsArrayList.add(new Asset("Cooling and Heating","AirCooler",10,4,40));
-        allAssetsArrayList.add(new Asset("Cooling and Heating","//Geyser",10,4,40));
-        allAssetsArrayList.add(new Asset("Cooling and Heating","Exhaust",10,4,40));
-        allAssetsArrayList.add(new Asset("Cooling and Heating","Fan",10,4,40));
-        allAssetsArrayList.add(new Asset("Cooling and Heating","Room-heater",10,4,40));
-        allAssetsArrayList.add(new Asset("Cooling and Heating","Refrigerator",10,4,40));
-        
-
-        allAssetsArrayList.add(new Asset("Water","Water dispenser",10,4,40));
-        allAssetsArrayList.add(new Asset("Water","Water pump",10,4,40));
-        allAssetsArrayList.add(new Asset("Water","Water Purifier",10,4,40));
-
-        allAssetsArrayList.add(new Asset("Appliances","Audio and Speaker",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Camera and Security",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Computer",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","DVD Player",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Diesel Generator",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Photocopier",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Projector",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Portable Scanner",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Room-heater",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Small Printer",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Smart Board",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Solar PV Battery",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Solar PV",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","UPS Battery",10,4,40));
-        allAssetsArrayList.add(new Asset("Appliances","Television",10,4,40));
+//        allAssetsArrayList.add(new Asset("Lighting","CFL",10,4,40));
+//        allAssetsArrayList.add(new Asset("Lighting","Tubelight",10,4,40));
+//        allAssetsArrayList.add(new Asset("Lighting","LED light bulb",10,4,40));
+//        allAssetsArrayList.add(new Asset("Lighting","Incandescent bulb",10,4,40));
+//
+//        allAssetsArrayList.add(new Asset("Cooling and Heating","Airconditioner",10,4,40));
+//        allAssetsArrayList.add(new Asset("Cooling and Heating","AirCooler",10,4,40));
+//        allAssetsArrayList.add(new Asset("Cooling and Heating","//Geyser",10,4,40));
+//        allAssetsArrayList.add(new Asset("Cooling and Heating","Exhaust",10,4,40));
+//        allAssetsArrayList.add(new Asset("Cooling and Heating","Fan",10,4,40));
+//        allAssetsArrayList.add(new Asset("Cooling and Heating","Room-heater",10,4,40));
+//        allAssetsArrayList.add(new Asset("Cooling and Heating","Refrigerator",10,4,40));
+//
+//
+//        allAssetsArrayList.add(new Asset("Water","Water dispenser",10,4,40));
+//        allAssetsArrayList.add(new Asset("Water","Water pump",10,4,40));
+//        allAssetsArrayList.add(new Asset("Water","Water Purifier",10,4,40));
+//
+//        allAssetsArrayList.add(new Asset("Appliances","Audio and Speaker",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Camera and Security",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Computer",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","DVD Player",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Diesel Generator",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Photocopier",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Projector",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Portable Scanner",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Room-heater",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Small Printer",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Smart Board",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Solar PV Battery",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Solar PV",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","UPS Battery",10,4,40));
+//        allAssetsArrayList.add(new Asset("Appliances","Television",10,4,40));
         
         
         
@@ -206,12 +283,10 @@ public class AssetsFragment extends Fragment {
 
     public  void seperateAssetsBasedOnCategory(){
 
-        Log.d("Size",allAssetsArrayList.size()+"");
         if(allAssetsArrayList.size() == 0) {
             return;
         }
         for(Asset asset : allAssetsArrayList){
-            Log.d("Category",asset.getCategory());
             switch (asset.getCategory()){
                 case "Lighting":
                     lightingAssetsList.add(asset);
@@ -222,7 +297,7 @@ public class AssetsFragment extends Fragment {
                 case "Water":
                     waterAssetsList.add(asset);
                     break;
-                case "Appliances":
+                case "Appliance":
                     appliancesAssetsList.add(asset);
                     break;
                 default:
@@ -235,20 +310,13 @@ public class AssetsFragment extends Fragment {
 
 
     public void populatePieGraphData(){
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
+
+        loadDistGIArrayList.add(new LoadDistGI("Lighting",4392 ,40));
+        loadDistGIArrayList.add(new LoadDistGI("Cooling and Heating",4392 ,20));
+        loadDistGIArrayList.add(new LoadDistGI("Water",4392 ,29));
+        loadDistGIArrayList.add(new LoadDistGI("Appliances",4392 ,1));
+
+
 
 
     }

@@ -125,6 +125,7 @@
                                        android:textSize="15sp"
                                        android:textStyle="bold" />
                                    <TextView
+                                       android:id="@+id/tvRequestDate"
                                        android:layout_width="wrap_content"
                                        android:layout_height="wrap_content"
                                        android:text="13 Jan 2018"/>
@@ -146,6 +147,7 @@
                                        android:paddingTop="5dp"
                                        android:textColorHint="#AA000000">
                                        <EditText
+                                           android:id="@+id/etRequest"
                                            android:layout_width="match_parent"
                                            android:layout_height="wrap_content"
                                            android:hint="Request"
@@ -232,6 +234,7 @@
                                </LinearLayout>
 
                                <Button
+                                   android:id="@+id/bSubmitRequest"
                                    android:layout_marginTop="10dp"
                                    android:layout_width="wrap_content"
                                    android:layout_height="wrap_content"

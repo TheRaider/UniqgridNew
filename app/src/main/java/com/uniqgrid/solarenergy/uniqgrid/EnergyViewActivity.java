@@ -29,7 +29,7 @@ import com.thefinestartist.utils.service.ClipboardManagerUtil;
 public class EnergyViewActivity extends AppCompatActivity {
 
     WebView webView;
-    boolean showSwipeRefreshLayout = true;
+//    boolean showSwipeRefreshLayout = true;
     SwipeRefreshLayout swipeRefreshLayout;
     ProgressBar progressBar;
     String url = "http://54.210.0.223:8080/login";
@@ -75,14 +75,16 @@ public class EnergyViewActivity extends AppCompatActivity {
 
         swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#048BFE"));
 
-        // Refreshing Page
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                webView.loadUrl(webView.getUrl());
-            }
-        });
+//        // Refreshing Page
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                webView.loadUrl(webView.getUrl());
+//            }
+//        });
 
+        swipeRefreshLayout.setEnabled(false);
+        swipeRefreshLayout.setRefreshing(false);
         ivWebViewOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,25 +191,25 @@ public class EnergyViewActivity extends AppCompatActivity {
         @Override
         public void onProgressChanged(WebView view, int progress) {
 
-            if (showSwipeRefreshLayout) {
-                if (swipeRefreshLayout.isRefreshing() && progress == 100) {
-                    swipeRefreshLayout.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
-                    });
-                }
-
-                if (!swipeRefreshLayout.isRefreshing() && progress != 100) {
-                    swipeRefreshLayout.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            swipeRefreshLayout.setRefreshing(true);
-                        }
-                    });
-                }
-            }
+//            if (showSwipeRefreshLayout) {
+//                if (swipeRefreshLayout.isRefreshing() && progress == 100) {
+//                    swipeRefreshLayout.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            swipeRefreshLayout.setRefreshing(false);
+//                        }
+//                    });
+//                }
+//
+//                if (!swipeRefreshLayout.isRefreshing() && progress != 100) {
+//                    swipeRefreshLayout.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            swipeRefreshLayout.setRefreshing(true);
+//                        }
+//                    });
+//                }
+//            }
 
             if (progress == 100) {
                 progress = 0;
