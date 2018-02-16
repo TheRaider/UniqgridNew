@@ -1,6 +1,10 @@
 package com.uniqgrid.solarenergy.uniqgrid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Location;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -27,10 +31,16 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class ProfileActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener  {
 
@@ -47,14 +57,25 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
     SupportMapFragment mapFragment;
 
     MapView mapView;
-    Place place = null;
+    LatLng placeLatLng  =  new LatLng(25.317645,82.973914);
 
     int PLACE_PICKER_REQUEST = 1;
 
 
+    ImageView ivBack;
 
 
     FloatingActionButton fabForward;
+
+    TextView tvEstName,tvSegment,tvSancLoad;
+    TextView tvOwnerName,tvOwnerPhone,tvOwnerEmail;
+    TextView tvPOCName,tvPOCPhone,tvPOCEmail;
+    TextView tvStreetAddress,tvArea,tvCity,tvState,tvPostalCode,tvGpsCoordinates;
+
+    String estName ="-" ,segment ="-" ,sancLoad ="-" ,ownerName ="-" ,ownerPhone ="-" ;
+    String ownerEmail ="-" ,pocName ="-" ,pocPhone ="-" ,pocEmail ="-" ;
+    String streetAddress ="-" ,area ="-" ,city ="-" ,state ="-" ,postalCode ="-" ,gpsCoordinates ="-" ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +83,10 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_profile);
 
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+        overridePendingTransition(R.anim.slide_in_up,R.anim.hold);
 
         if(getSupportActionBar()!=null){
             getSupportActionBar().setTitle("Profile");
@@ -77,6 +98,16 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
         mPlaceAttribution = (TextView) findViewById(R.id.place_attribution);
 
         nsAddEst = (NestedScrollView) findViewById(R.id.nsAddEst);
+
+
+        ivBack = (ImageView) findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
 
 
 
@@ -121,17 +152,94 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
 
 
 
-       // Get the SupportMapFragment and request notification
-        // when the map is ready to be used.
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
+
+        // Initialise views
+        tvEstName = (TextView) findViewById(R.id.tvEstName);
+        tvSegment = (TextView) findViewById(R.id.tvSegment);
+        tvSancLoad = (TextView) findViewById(R.id.tvSancLoad);
+        tvOwnerName = (TextView) findViewById(R.id.tvOwnerName);
+        tvOwnerPhone = (TextView) findViewById(R.id.tvOwnerPhone);
+        tvOwnerEmail = (TextView) findViewById(R.id.tvOwnerEmail);
+        tvPOCName = (TextView) findViewById(R.id.tvPOCName);
+        tvPOCPhone = (TextView) findViewById(R.id.tvPOCPhone);
+        tvPOCEmail = (TextView) findViewById(R.id.tvPOCEmail);
+        tvStreetAddress = (TextView) findViewById(R.id.tvStreetAddress);
+        tvArea = (TextView) findViewById(R.id.tvArea);
+        tvCity = (TextView) findViewById(R.id.tvCity);
+        tvState = (TextView) findViewById(R.id.tvState);
+        tvPostalCode = (TextView) findViewById(R.id.tvPostalCode);
+        tvGpsCoordinates = (TextView) findViewById(R.id.tvGpsCoordinates);
+
+
+
+        prepareData();
+        loadData();
+
+
 
     }
 
 
 
+    public  void prepareData(){
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+        String content = app_preferences.getString("content","abcd");
+        if(!content.equals("abcd")){
+            try {
 
+                JSONObject contentJson = new JSONObject(content);
+                estName = contentJson.getString("Name of the establishment");
+                segment = contentJson.getString("Segment");
+                sancLoad = contentJson.getString("Sanctioned load in kW");
+                ownerName = contentJson.getString("Owner");
+                ownerPhone = contentJson.getString("Owner's Phone");
+                pocName = contentJson.getString("Point of Contact (PoC)");
+                pocPhone = contentJson.getString("PoC's Phone");
+                streetAddress = contentJson.getString("Street Address");
+                area = contentJson.getString("Area");
+                city = contentJson.getString("City");
+                state = contentJson.getString("State");
+                postalCode = contentJson.getString("Postal Code");
+                gpsCoordinates = contentJson.getString("GPS Coordinate");
+
+                setLatLng(gpsCoordinates);
+
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void setLatLng(String coordinates){
+
+    }
+
+    public  void loadData(){
+        tvEstName.setText(estName);
+        tvSegment.setText(segment);
+        tvSancLoad.setText(sancLoad);
+        tvOwnerName.setText(ownerName);
+        tvOwnerPhone.setText(ownerPhone);
+        tvOwnerEmail.setText(ownerEmail);
+        tvPOCName.setText(pocName);
+        tvOwnerPhone.setText(ownerPhone);
+        tvPOCEmail.setText(pocEmail);
+        tvStreetAddress.setText(streetAddress);
+        tvArea.setText(area);
+        tvCity.setText(city);
+        tvState.setText(state);
+        tvPostalCode.setText(postalCode);
+        tvGpsCoordinates.setText(gpsCoordinates);
+
+
+
+
+    }
     public void getLocation(){
 
         mapFragment.getMapAsync(this);
@@ -142,8 +250,20 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onResume() {
         super.onResume();
 
-    }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
+                // Get the SupportMapFragment and request notification
+                // when the map is ready to be used.
+                mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.map);
+
+                mapFragment.getMapAsync(ProfileActivity.this);
+            }
+        },2000);
+
+    }
 
 
     @Override
@@ -170,22 +290,34 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
         */
 
         mMap.setOnMarkerClickListener(this);
+        setLocation();
 
     }
 
 
 
     public void setLocation(){
-        Log.d("Location Selected ",place!=null?place.getName().toString():"null");
-        if(place !=null) {
-            mMap.clear();
-            MarkerOptions markerOptions = new MarkerOptions().position(place.getLatLng()).title(place.getName().toString());
-            //   markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_trends));
-            Marker marker = mMap.addMarker(markerOptions);
+        if(placeLatLng !=null) {
+            try {
+                mMap.clear();
+                MarkerOptions markerOptions = new MarkerOptions().position(placeLatLng).title(estName);
+                //   markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_trends));
+                Marker marker = mMap.addMarker(markerOptions);
 
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(
-                    place.getLatLng()).zoom(14).build();
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(
+                        placeLatLng).zoom(14).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }catch (Exception e){
+                LatLng tempLatLng = new LatLng(25.317645,82.973914);
+                mMap.clear();
+                MarkerOptions markerOptions = new MarkerOptions().position(tempLatLng).title(estName);
+                //   markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_trends));
+                Marker marker = mMap.addMarker(markerOptions);
+
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(
+                        tempLatLng).zoom(14).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
         }
     }
 
@@ -200,12 +332,19 @@ public class ProfileActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
 
-        return true;
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.hold, R.anim.slide_down);
     }
 
-
-
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        marker.showInfoWindow();
+        return true;
+    }
 }

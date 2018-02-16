@@ -1,15 +1,37 @@
 package com.uniqgrid.solarenergy.uniqgrid;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,15 +43,29 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
+                .build();
+
+        AndroidNetworking.initialize(getApplicationContext(), okHttpClient);
+
+        pd = new ProgressDialog(LoginActivity.this);
+        pd.setMessage("Please wait......");
+        pd.setCancelable(true);
+        pd.setCanceledOnTouchOutside(false);
+
+
+
+     //   overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
+
+
 
         tvLogo = (TextView)findViewById(R.id.tvLogo);
         tilEmailId = (TextInputLayout) findViewById(R.id.tilEmailId);
@@ -59,26 +95,14 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (isValidPassword(password)) {
 
-                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                   /*  intent.putExtra("name",name);
-                intent.putExtra("email",email);
-                intent.putExtra("proPicUrl",proPicUrl);*/
-                                startActivity(intent);
-
-                               /*  try {
-                                   loginInput.put("email",emailid);
-                                    loginInput.put("password",password);
-
-                                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                                  //  pd.show();
-                                   // loginConnection();
 
 
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                } */
+                                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                pd.show();
+                                loginConnection(emailid,password);
+
 
 
                             } else {
@@ -107,8 +131,11 @@ public class LoginActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
+                String url = "https://forms.zohopublic.com/Uniqgrid/form/LeadsOnlineChannel/formperma/4413KG9B1DB1ajF6B4F653CGF";
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+//                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -118,10 +145,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void loginConnection(){
-      /*  AndroidNetworking.post("https://api.thinkmerit.in/api/auth/login")
-                .addJSONObjectBody(loginInput) // posting json
-                .setTag("loginConnection")
+    public void loginConnection(final String email, final String passwo){
+
+        AndroidNetworking.get("https://www.ragic.com/uniqgrid/crm3/1?where=1000507,eq,"+email+"&api")
+                .addHeaders("Authorization","Basic ajZNMW9hMFQrV2lqT2NxdURuTzJGbS8yRnhrY0crQmpUdGt0R1RPNFhHSldKK2lTL3dBWVhKOG1ScHpEQXVNOQ==") // posting header
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -129,70 +156,83 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
 
-                        String rcvdMsg = "";
-                        String successMsg="";
+                        String crctPassword = "";
+                        String successMsg="abcd";
+                        JSONObject content = new JSONObject();
+                        Iterator<String> keys = response.keys();
 
-                        try {
-                            successMsg = response.getString("token");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            JSONArray rcvdMsgA = response.getJSONArray("error");
-                            rcvdMsg = rcvdMsgA.getString(0);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        if(rcvdMsg.equals("invalid_credentials")){
-                            Snackbar.make(findViewById(android.R.id.content), "Invalid Credentials", Snackbar.LENGTH_LONG).show();
-                            LoginPage.this.runOnUiThread(new Runnable() {
+                        if(response.length() == 0 || !(keys.hasNext())){
+                            Log.d("result","length is 0");
+                            Snackbar.make(findViewById(android.R.id.content), "Email is not yet registered", Snackbar.LENGTH_LONG).show();
+                            LoginActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     pd.dismiss();
                                 }
                             });
-                        }
-                        else  if((!(successMsg.equals("")))) {
-
-                            SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(LoginPage.this);
-                            SharedPreferences.Editor editor = app_preferences.edit();
-                            editor.putString("token", successMsg);
-                            editor.putInt("should_display_intro", 0);
-                            editor.apply();
-
-                            Toast.makeText(LoginPage.this,"Login Successful",Toast.LENGTH_LONG).show();
-                            getUserDetailsConnection();
                         }else{
+                            try {
+                                if(keys.hasNext()) {
+                                    content = response.getJSONObject(keys.next());
+                                    crctPassword = content.getString("Account Password");
+                                }
+                            }catch (JSONException exception){
+
+                            }
+                            if (!passwo.equals(crctPassword)){
+                                    Log.d("result","invalid password" + passwo +" " + crctPassword);
+                                    Snackbar.make(findViewById(android.R.id.content), "Invalid password", Snackbar.LENGTH_LONG).show();
+                                LoginActivity.this.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        pd.dismiss();
+                                    }
+                                });
+                            }else{
+                                Log.d("result","success");
+                                successMsg = "success";
+                                SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                                SharedPreferences.Editor editor = app_preferences.edit();
+                                editor.putString("token", successMsg);
+                                editor.putString("email",email);
+                                editor.putString("content",content.toString());
+                                editor.apply();
+
+                                LoginActivity.this.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        pd.dismiss();
+                                    }
+                                });
+
+                                Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
+                                startActivity(intent);
+                                finish();
+
+                                    Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
+
+                                }
+
+
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
                             Snackbar.make(findViewById(android.R.id.content), "Please check your Network Connection", Snackbar.LENGTH_LONG).show();
 
-                            LoginPage.this.runOnUiThread(new Runnable() {
+                            LoginActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     pd.dismiss();
                                 }
                             });
                         }
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
 
-                        if(error.getErrorCode() == 401){
-                            Snackbar.make(findViewById(android.R.id.content), "Invalid Credentials", Snackbar.LENGTH_LONG).show();
-                        }
-                        else if(error != null && !error.getErrorDetail().equalsIgnoreCase("requestCancelledError")){
-                            Snackbar.make(findViewById(android.R.id.content), error.getErrorDetail(), Snackbar.LENGTH_LONG).show();
-                        }
-
-                        LoginPage.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                pd.dismiss();
-                            }
-                        });
-                    }
                 });
-                */
+
+
     }
+
+
 
 
     public boolean isValidEmailAddress(String email) {
@@ -207,5 +247,17 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(pd!=null && pd.isShowing()){
+            pd.dismiss();
+            AndroidNetworking.forceCancelAll();
+        }else{
+            super.onBackPressed();
+            overridePendingTransition(R.anim.activity_open_scale,R.anim.activity_close_translate);
+        }
+
     }
 }

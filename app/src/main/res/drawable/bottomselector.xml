@@ -3,7 +3,7 @@
 
     <item
         android:state_checked="true"
-        android:color="@color/colorAccent" />
+        android:color="#4368a3" />
 
     <item
         android:color="@color/grey"

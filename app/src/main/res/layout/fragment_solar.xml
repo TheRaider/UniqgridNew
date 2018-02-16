@@ -24,7 +24,8 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginBottom="15dp"
-                android:focusableInTouchMode="true">
+                android:focusableInTouchMode="true"
+                android:visibility="visible">
 
              <LinearLayout
                  android:layout_width="match_parent"
@@ -36,9 +37,9 @@
                      android:paddingTop="10dp"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:text="ROOF TOP"
+                     android:text="ROOFTOP VIEW"
                      android:textStyle="bold"
-                     android:textColor="@color/colorPrimary"/>
+                     android:textColor="@color/card_heading"/>
                  <LinearLayout
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
@@ -106,6 +107,7 @@
                                 android:text="Cumulative Area"/>
 
                             <TextView
+                                android:id="@+id/tvCumulativeArea"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -126,6 +128,7 @@
                                 android:text="Rooftop Blocks available"/>
 
                             <TextView
+                                android:id="@+id/tvRoofTopBlocks"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -146,6 +149,7 @@
                                 android:text="Feasible Solar PV"/>
 
                             <TextView
+                                android:id="@+id/tvFeasibleSolarPv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -166,7 +170,9 @@
                                 android:textColor="#aa000000"
                                 android:layout_height="wrap_content"
                                 android:text="Optimal Solar PV "/>
+
                             <TextView
+                                android:id="@+id/tvOptimalSolarPv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -189,6 +195,7 @@
                                 android:text="No. of Solar Panels"/>
 
                             <TextView
+                                android:id="@+id/tvNoOfSolarPanels"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -209,6 +216,7 @@
                                 android:text="Lifetime Solar Generation"/>
 
                             <TextView
+                                android:id="@+id/tvLifetimeSolarGeneration"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -231,6 +239,7 @@
                                 android:text="First year Solar Generation"/>
 
                             <TextView
+                                android:id="@+id/tvFirstYearSolarGeneration"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -274,7 +283,7 @@
                         android:layout_height="wrap_content"
                         android:text="SOLAR ANALYSIS"
                         android:textStyle="bold"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textColor="@color/card_heading"/>
 
 
                     <com.github.mikephil.charting.charts.LineChart

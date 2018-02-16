@@ -1,9 +1,11 @@
 package com.uniqgrid.solarenergy.uniqgrid;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,9 +42,13 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import models.ConsumptionGI;
@@ -51,13 +57,17 @@ import models.LoadDistGI;
 
 public class ConsumptionFragment extends Fragment {
 
-    PieChart pieChart;
+
     BarChart barChart;
     ArrayList<Integer> colors;
-    ArrayList<LoadDistGI> loadDistGIArrayList = new ArrayList<>();
     ArrayList<ConsumptionGI> consumptionGIArrayList = new ArrayList<>();
     ArrayList<String> labels = new ArrayList<>();
     NestedScrollView nsAddEst;
+
+    TextView tvAnnualEnergy,tvMaxAnnualEnergy,tvAvgEnergy,tvStandardDeviation,tvAnnualEnergyCost;
+    String annualEnergy="-",maxAnnualEnergy="-",avgEnergy="-",standardDeviation="-",annualEnergyCost="-";
+
+
 
 
     @Override
@@ -82,35 +92,13 @@ public class ConsumptionFragment extends Fragment {
             colors.add(c);
 
 
-
-        // Charts
-
-        // Load Distribution PieChart
-        pieChart = (PieChart) customView.findViewById(R.id.pieChart);
-
-        // Setting Legend(actually removing the legend)
-        //pieChart.getLegend().setEnabled(false);
-        pieChart.getLegend().setWordWrapEnabled(true);
-      //  pieChart.getLegend().setPosition(Legend.LegendPosition.RIGHT_OF_CHART_CENTER);
-      //  pieChart.getLegend().setOrientation(Legend.LegendOrientation.VERTICAL);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setRotationEnabled(false);
-        pieChart.setDrawSliceText(false);
-        pieChart.setHoleRadius(20f);
-        pieChart.setTransparentCircleRadius(20f);
-
-      //  pieChart.setCenterText("Total  \n " + RoundOff(100));
-
-        populatePieGraphData();
-        populatePieGraph(loadDistGIArrayList,"Load Distribution");
-
         // Consumption Pattern Bar Chart
 
         barChart = (BarChart) customView.findViewById(R.id.barchart);
         barChart.getDescription().setEnabled(false);
 
-        populateConsumptionBarGraphData();
+//        populateConsumptionBarGraphData();
+        prepareData();
         populateConsumptionBarGraph(consumptionGIArrayList,"Consumption");
 
         barChart.setVisibleXRangeMaximum(7); // set maximum bars visible
@@ -147,6 +135,7 @@ public class ConsumptionFragment extends Fragment {
         l.setFormSize(9f);
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
+        l.setEnabled(false);
 
 
         IMarker marker = new YourMarkerView(getContext(),R.layout.custom_marker_view_layout);
@@ -154,8 +143,16 @@ public class ConsumptionFragment extends Fragment {
 
         barChart.animateY(1000);
 
+        tvAnnualEnergy = (TextView) customView.findViewById(R.id.tvAnnualEnergy);
+        tvMaxAnnualEnergy = (TextView) customView.findViewById(R.id.tvMaxAnnualEnergy);
+        tvAvgEnergy = (TextView) customView.findViewById(R.id.tvAvgEnergy);
+        tvStandardDeviation = (TextView) customView.findViewById(R.id.tvStandardDeviation);
+        tvAnnualEnergyCost = (TextView) customView.findViewById(R.id.tvAnnualEnergyCost);
 
 
+
+
+        loadData();
 
 
 
@@ -177,24 +174,7 @@ public class ConsumptionFragment extends Fragment {
 
     }
 
-    public void populatePieGraphData(){
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
-        loadDistGIArrayList.add(new LoadDistGI("Lighting akjsajdjjaj",4392 ,11.2));
 
-
-    }
 
 
     public void populateConsumptionBarGraph(ArrayList<ConsumptionGI> consumptionGIS , String Label){
@@ -225,50 +205,56 @@ public class ConsumptionFragment extends Fragment {
 
     }
 
+    public  void prepareData(){
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String content = app_preferences.getString("content","abcd");
+        if(!content.equals("abcd")){
+            try {
+
+                float consumptionNum =0f;
+                JSONObject contentJson = new JSONObject(content);
+                JSONObject consumptionGIsJson = contentJson.getJSONObject("_subtable_1000500");
+                Iterator<String> keys = consumptionGIsJson.keys();
+                while(keys.hasNext()){
+                    JSONObject consumptionGIJson = consumptionGIsJson.getJSONObject(keys.next());
+                    try {
+                        consumptionNum = Float.parseFloat(consumptionGIJson.getString("Consumption (kWhr)"));
+                    }catch (Exception e){
+
+                    }
+                    ConsumptionGI consumptionGI = new ConsumptionGI(consumptionGIJson.getString("Month"),
+                            consumptionNum);
+                    consumptionGIArrayList.add(consumptionGI);
+                }
+
+                annualEnergy = contentJson.getString("Annual Energy");
+                maxAnnualEnergy = contentJson.getString("Maximum Energy");
+                avgEnergy = contentJson.getString("Average Energy");
+                standardDeviation = contentJson.getString("Standard deviation");
+                annualEnergyCost = contentJson.getString("Annual Energy cost");
 
 
 
-    public void populatePieGraph(ArrayList<LoadDistGI> graphItems , String Label){
-        ArrayList<PieEntry> yValues = new ArrayList<>();
-        for(LoadDistGI graphItem : graphItems) {
 
-            if(graphItem.getkW() > 0){
-                yValues.add(new PieEntry((float) graphItem.getPercent(),graphItem.getCategory()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
 
-        PieDataSet pieDataSet = new PieDataSet(yValues,"");
-        pieDataSet.setColors(colors);
-      //  pieDataSet.setLabel("Load Distribution");
-        pieDataSet.setSliceSpace(2f);
-
-        IValueFormatter formatter = new IValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                return value+"";
-            }
-        };
-
-
-        IValueFormatter MyValueFormatter = new IValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                if(value < 5) return "";
-                else return value + " %";
-            }
-        };
-
-
-        PieData pieData = new PieData(pieDataSet);
-        pieData.setValueTextSize(11f);
-      //  pieData.setValueFormatter(formatter);
-        pieData.setValueFormatter(new PercentFormatter());
-
-        pieChart.setData(pieData);
-        pieChart.animateY(1400);
-
-
     }
+
+    public void loadData(){
+        tvAnnualEnergy.setText(": " +annualEnergy);
+        tvMaxAnnualEnergy.setText(": "+maxAnnualEnergy);
+        tvAvgEnergy.setText(": "+avgEnergy);
+        tvStandardDeviation.setText(": "+standardDeviation);
+        tvAnnualEnergyCost.setText(": INR "+annualEnergyCost);
+    }
+
+
+
+
 
     public Double RoundOff(Double d){
         return Math.round(d * 100.0) / 100.0;
