@@ -1,0 +1,568 @@
+{"3": {
+  "_ragicId": 3,
+  "Name of the establishment": "College Name",
+  "_index_title_": "College Name",
+  "Relationship managed by": "Kunwar Kuldeep",
+  "Segment": "Institutional",
+  "Lead initiated on": "2017/09/08",
+  "Email": "demo@uniqgrid.com",
+  "Sub-segment": "School",
+  "Next Appointment date": "2018/01/30",
+  "Account Password": "demo123",
+  "Secondary Email": "",
+  "Owner": "Owner",
+  "Street Address": "15 Colony Lane",
+  "Owner's Phone": "+91-779-9122202",
+  "Area": "Ravindrapur",
+  "Point of Contact (PoC)": "Ankur Singh",
+  "City": "Varanasi",
+  "PoC's Phone": "+91-779-9122202",
+  "State": "Uttar Pradesh (UP)",
+  "PoC Authority": "Manager",
+  "Postal Code": "221005",
+  "GPS Coordinate": "28.440079, 77.067492",
+  "Sanctioned load in kW": "20",
+  "Is the property solarized?": "No",
+  "Distribution company": "Purvanchal Vidyut Vitaran Nigam Limited",
+  "Electricity Bill": "5x41G2K6Rr@Gopi Radha Bill.jpg",
+  "Map": "NS52PP4Ajr@Gopi Radha Image.JPG",
+  "Annual Energy": "22451",
+  "Maximum Energy": "3177",
+  "Average Energy": "1816.5",
+  "Annual Energy cost": "209466",
+  "Standard deviation": "590",
+  "Cumulative Area in Sq. ft.": "4000",
+  "Rooftop Blocks available": "3",
+  "Feasible Solar PV (kWp)": "15.08",
+  "Optimal Solar PV (kWp)": "15.08",
+  "No. of Solar Panels": "49",
+  "Lifetime Solar Generation": "495000",
+  "First year Solar Generation": "22454",
+  "Solar Image (Rooftop)": "JeFZW2luvK@Solar_Pic.jpg",
+  "Plan": "Consumption Management",
+  "Total Tickets": "3",
+  "Active Tickets": "1",
+  "Value Delivered": "20000",
+  "_subtable_1000582": {"0": {
+    "_ragicId": 0,
+    "_parentRagicId": 3,
+    "Energy Assessment": "Yes",
+    "Device Installation": "No",
+    "EnergyView Activation": "No",
+    "Consumption Management": "No",
+    "Solar Installation": "No",
+    "Generation Management": "No"
+  }},
+  "_subtable_1000500": {
+    "0": {
+      "_ragicId": 0,
+      "_parentRagicId": 3,
+      "Month": "January",
+      "Consumption (kWhr)": "1287",
+      "Total Electricity Cost": "12842",
+      "Energy Charge": "9066"
+    },
+    "1": {
+      "_ragicId": 1,
+      "_parentRagicId": 3,
+      "Month": "February",
+      "Consumption (kWhr)": "1201",
+      "Total Electricity Cost": "12149",
+      "Energy Charge": "8447"
+    },
+    "2": {
+      "_ragicId": 2,
+      "_parentRagicId": 3,
+      "Month": "March",
+      "Consumption (kWhr)": "1246",
+      "Total Electricity Cost": "12512",
+      "Energy Charge": "8771"
+    },
+    "3": {
+      "_ragicId": 3,
+      "_parentRagicId": 3,
+      "Month": "April",
+      "Consumption (kWhr)": "1380",
+      "Total Electricity Cost": "13592",
+      "Energy Charge": "9736"
+    },
+    "4": {
+      "_ragicId": 4,
+      "_parentRagicId": 3,
+      "Month": "May",
+      "Consumption (kWhr)": "2249",
+      "Total Electricity Cost": "20554",
+      "Energy Charge": "16042"
+    },
+    "5": {
+      "_ragicId": 5,
+      "_parentRagicId": 3,
+      "Month": "June",
+      "Consumption (kWhr)": "1619",
+      "Total Electricity Cost": "15647",
+      "Energy Charge": "11457"
+    },
+    "6": {
+      "_ragicId": 6,
+      "_parentRagicId": 3,
+      "Month": "July",
+      "Consumption (kWhr)": "1664",
+      "Total Electricity Cost": "18583",
+      "Energy Charge": "11781"
+    },
+    "7": {
+      "_ragicId": 7,
+      "_parentRagicId": 3,
+      "Month": "August",
+      "Consumption (kWhr)": "3177",
+      "Total Electricity Cost": "30984",
+      "Energy Charge": "22910"
+    },
+    "8": {
+      "_ragicId": 8,
+      "_parentRagicId": 3,
+      "Month": "September",
+      "Consumption (kWhr)": "2343",
+      "Total Electricity Cost": "20580",
+      "Energy Charge": "16019"
+    },
+    "9": {
+      "_ragicId": 9,
+      "_parentRagicId": 3,
+      "Month": "October",
+      "Consumption (kWhr)": "2384",
+      "Total Electricity Cost": "20902",
+      "Energy Charge": "16307"
+    },
+    "10": {
+      "_ragicId": 10,
+      "_parentRagicId": 3,
+      "Month": "November",
+      "Consumption (kWhr)": "1962",
+      "Total Electricity Cost": "18286",
+      "Energy Charge": "13926"
+    },
+    "11": {
+      "_ragicId": 11,
+      "_parentRagicId": 3,
+      "Month": "December",
+      "Consumption (kWhr)": "1286",
+      "Total Electricity Cost": "12834",
+      "Energy Charge": "9059"
+    }
+  },
+  "_subtable_1000506": {
+    "0": {
+      "_ragicId": 0,
+      "_parentRagicId": 3,
+      "Category": "Cooling and Heating",
+      "Asset Type": "Airconditioner",
+      "Wattage": "1610",
+      "Quantity": "4",
+      "Total Wattage": "6440"
+    },
+    "1": {
+      "_ragicId": 1,
+      "_parentRagicId": 3,
+      "Category": "Cooling and Heating",
+      "Asset Type": "Airconditioner",
+      "Wattage": "1700",
+      "Quantity": "1",
+      "Total Wattage": "1700"
+    },
+    "2": {
+      "_ragicId": 2,
+      "_parentRagicId": 3,
+      "Category": "Cooling and Heating",
+      "Asset Type": "Airconditioner",
+      "Wattage": "1770",
+      "Quantity": "1",
+      "Total Wattage": "1770"
+    },
+    "3": {
+      "_ragicId": 3,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Camera and Security",
+      "Wattage": "140",
+      "Quantity": "2",
+      "Total Wattage": "280"
+    },
+    "4": {
+      "_ragicId": 4,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Camera and Security",
+      "Wattage": "400",
+      "Quantity": "1",
+      "Total Wattage": "400"
+    },
+    "5": {
+      "_ragicId": 5,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Computer",
+      "Wattage": "250",
+      "Quantity": "37",
+      "Total Wattage": "9250"
+    },
+    "6": {
+      "_ragicId": 6,
+      "_parentRagicId": 3,
+      "Category": "Water",
+      "Asset Type": "Water dispenser",
+      "Wattage": "180",
+      "Quantity": "1",
+      "Total Wattage": "180"
+    },
+    "7": {
+      "_ragicId": 7,
+      "_parentRagicId": 3,
+      "Category": "Water",
+      "Asset Type": "Water dispenser",
+      "Wattage": "500",
+      "Quantity": "1",
+      "Total Wattage": "500"
+    },
+    "8": {
+      "_ragicId": 8,
+      "_parentRagicId": 3,
+      "Category": "Water",
+      "Asset Type": "Water dispenser",
+      "Wattage": "1000",
+      "Quantity": "1",
+      "Total Wattage": "1000"
+    },
+    "9": {
+      "_ragicId": 9,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "DVD Player",
+      "Wattage": "12",
+      "Quantity": "1",
+      "Total Wattage": "12"
+    },
+    "10": {
+      "_ragicId": 10,
+      "_parentRagicId": 3,
+      "Category": "Cooling and Heating",
+      "Asset Type": "Fan",
+      "Wattage": "50",
+      "Quantity": "150",
+      "Total Wattage": "7500"
+    },
+    "11": {
+      "_ragicId": 11,
+      "_parentRagicId": 3,
+      "Category": "Lighting",
+      "Asset Type": "CFL",
+      "Wattage": "20",
+      "Quantity": "4",
+      "Total Wattage": "80"
+    },
+    "12": {
+      "_ragicId": 12,
+      "_parentRagicId": 3,
+      "Category": "Lighting",
+      "Asset Type": "LED light bulb",
+      "Wattage": "7",
+      "Quantity": "1",
+      "Total Wattage": "7"
+    },
+    "13": {
+      "_ragicId": 13,
+      "_parentRagicId": 3,
+      "Category": "Lighting",
+      "Asset Type": "CFL",
+      "Wattage": "18",
+      "Quantity": "22",
+      "Total Wattage": "396"
+    },
+    "14": {
+      "_ragicId": 14,
+      "_parentRagicId": 3,
+      "Category": "Lighting",
+      "Asset Type": "CFL",
+      "Wattage": "20",
+      "Quantity": "20",
+      "Total Wattage": "400"
+    },
+    "15": {
+      "_ragicId": 15,
+      "_parentRagicId": 3,
+      "Category": "Lighting",
+      "Asset Type": "Tubelight",
+      "Wattage": "40",
+      "Quantity": "86",
+      "Total Wattage": "3440"
+    },
+    "16": {
+      "_ragicId": 16,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Audio and Speaker",
+      "Wattage": "200",
+      "Quantity": "1",
+      "Total Wattage": "200"
+    },
+    "17": {
+      "_ragicId": 17,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Audio and Speaker",
+      "Wattage": "70",
+      "Quantity": "1",
+      "Total Wattage": "70"
+    },
+    "18": {
+      "_ragicId": 18,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Table Printer",
+      "Wattage": "250",
+      "Quantity": "8",
+      "Total Wattage": "2000"
+    },
+    "19": {
+      "_ragicId": 19,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Projector",
+      "Wattage": "800",
+      "Quantity": "2",
+      "Total Wattage": "1600"
+    },
+    "20": {
+      "_ragicId": 20,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Refrigerator",
+      "Wattage": "160",
+      "Quantity": "1",
+      "Total Wattage": "160"
+    },
+    "21": {
+      "_ragicId": 21,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Audio and Speaker",
+      "Wattage": "100",
+      "Quantity": "1",
+      "Total Wattage": "100"
+    },
+    "22": {
+      "_ragicId": 22,
+      "_parentRagicId": 3,
+      "Category": "Water",
+      "Asset Type": "Water pump",
+      "Wattage": "746",
+      "Quantity": "2",
+      "Total Wattage": "1492"
+    },
+    "23": {
+      "_ragicId": 23,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Television",
+      "Wattage": "50",
+      "Quantity": "1",
+      "Total Wattage": "50"
+    },
+    "24": {
+      "_ragicId": 24,
+      "_parentRagicId": 3,
+      "Category": "Appliance",
+      "Asset Type": "Television",
+      "Wattage": "140",
+      "Quantity": "1",
+      "Total Wattage": "140"
+    }
+  },
+  "_subtable_1000555": {
+    "0": {
+      "_ragicId": 0,
+      "_parentRagicId": 3,
+      "Asset Category": "Lighting",
+      "kW": "4392",
+      "%": "11.2"
+    },
+    "1": {
+      "_ragicId": 1,
+      "_parentRagicId": 3,
+      "Asset Category": "Cooling and Heating",
+      "kW": "19110",
+      "%": "48.7"
+    },
+    "2": {
+      "_ragicId": 2,
+      "_parentRagicId": 3,
+      "Asset Category": "Water",
+      "kW": "1500",
+      "%": "3.8"
+    },
+    "3": {
+      "_ragicId": 3,
+      "_parentRagicId": 3,
+      "Asset Category": "Appliance",
+      "kW": "14262",
+      "%": "36.3"
+    }
+  },
+  "_subtable_1000586": {
+    "0": {
+      "_ragicId": 0,
+      "_parentRagicId": 3,
+      "Month": "January",
+      "Past Energy Bill": "20580",
+      "Target Energy Bill": "2652"
+    },
+    "1": {
+      "_ragicId": 1,
+      "_parentRagicId": 3,
+      "Month": "February",
+      "Past Energy Bill": "20902",
+      "Target Energy Bill": "2652"
+    },
+    "2": {
+      "_ragicId": 2,
+      "_parentRagicId": 3,
+      "Month": "March",
+      "Past Energy Bill": "18286",
+      "Target Energy Bill": "2652"
+    },
+    "3": {
+      "_ragicId": 3,
+      "_parentRagicId": 3,
+      "Month": "April",
+      "Past Energy Bill": "12834",
+      "Target Energy Bill": "2652"
+    },
+    "4": {
+      "_ragicId": 4,
+      "_parentRagicId": 3,
+      "Month": "May",
+      "Past Energy Bill": "12842",
+      "Target Energy Bill": "2652"
+    },
+    "5": {
+      "_ragicId": 5,
+      "_parentRagicId": 3,
+      "Month": "June",
+      "Past Energy Bill": "12149",
+      "Target Energy Bill": "2652"
+    },
+    "6": {
+      "_ragicId": 6,
+      "_parentRagicId": 3,
+      "Month": "July",
+      "Past Energy Bill": "12512",
+      "Target Energy Bill": "2652"
+    },
+    "7": {
+      "_ragicId": 7,
+      "_parentRagicId": 3,
+      "Month": "August",
+      "Past Energy Bill": "13592",
+      "Target Energy Bill": "2652"
+    },
+    "8": {
+      "_ragicId": 8,
+      "_parentRagicId": 3,
+      "Month": "September",
+      "Past Energy Bill": "20554",
+      "Target Energy Bill": "2652"
+    },
+    "9": {
+      "_ragicId": 9,
+      "_parentRagicId": 3,
+      "Month": "October",
+      "Past Energy Bill": "15647",
+      "Target Energy Bill": "2652"
+    },
+    "10": {
+      "_ragicId": 10,
+      "_parentRagicId": 3,
+      "Month": "November",
+      "Past Energy Bill": "18583",
+      "Target Energy Bill": "5304"
+    },
+    "11": {
+      "_ragicId": 11,
+      "_parentRagicId": 3,
+      "Month": "December",
+      "Past Energy Bill": "30984",
+      "Target Energy Bill": "5304"
+    }
+  },
+  "_subtable_1000526": {
+    "0": {
+      "_ragicId": 0,
+      "_parentRagicId": 3,
+      "Year": "2017/11/30",
+      "Consumption (kWh)": "2500",
+      "Generation (kWh)": "1200",
+      "Electricity Cost (INR)": "21000"
+    },
+    "1": {
+      "_ragicId": 1,
+      "_parentRagicId": 3,
+      "Year": "2018/01/31",
+      "Consumption (kWh)": "2300",
+      "Generation (kWh)": "1500",
+      "Electricity Cost (INR)": "25000"
+    }
+  },
+  "_subtable_1000538": {
+    "0": {
+      "_ragicId": 0,
+      "_parentRagicId": 3,
+      "Ticket Status": "Created",
+      "Request": "Replace all the Tubelights with CFLs",
+      "Created": "2018/01/16",
+      "Confirmed": "",
+      "Completed": "",
+      "Comm. Value": "2000",
+      "Feedback": ""
+    },
+    "1": {
+      "_ragicId": 1,
+      "_parentRagicId": 3,
+      "Ticket Status": "Confirmed",
+      "Request": "Evaluation of Solar Plant",
+      "Created": "2018/01/08",
+      "Confirmed": "2018/01/23",
+      "Completed": "2018/01/24",
+      "Comm. Value": "1000",
+      "Feedback": "5"
+    }
+  },
+  "_subtable_1000542": {"0": {
+    "_ragicId": 0,
+    "_parentRagicId": 3,
+    "Date": "2017/09/08",
+    "Description": "Energy Assessment",
+    "File": "6cIKiRzV73@Energy Assessment Report - Gopi Radha.pdf"
+  }},
+  "_subtable_1000545": {
+    "0": {
+      "_ragicId": 0,
+      "_parentRagicId": 3,
+      "Date": "2018/12/12",
+      "Commercial Value": "1100"
+    },
+    "1": {
+      "_ragicId": 1,
+      "_parentRagicId": 3,
+      "Date": "2018/01/24",
+      "Commercial Value": "2000"
+    },
+    "2": {
+      "_ragicId": 2,
+      "_parentRagicId": 3,
+      "Date": "2018/01/25",
+      "Commercial Value": "1900"
+    }
+  },
+  "_index_": "",
+  "_seq": 1
+}}
